@@ -8,16 +8,10 @@ Welcome to AutoKey!
 
 .. toctree::
    intro
+   api
    quickstart
 
 
-.. automodule:: autokey.scripting
-.. autoclass:: GtkClipboard
-.. autoclass:: QtClipboard
-.. autoclass:: GtkDialog
-.. autoclass:: QtDialog
-.. autoclass:: ColourData
-.. autoclass:: DialogData
 
 
 Indices and tables
