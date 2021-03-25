@@ -1,0 +1,977 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction &#8212; AutoKey 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The API examples shown here are for AutoKey-GTK.</p>
+<p>The examples show how to use the various API calls that AutoKey
+provides.</p>
+<p>The example types are as follows: - <a class="reference external" href="#clipboard">Clipboard</a> -
+<a class="reference external" href="#dialogs">Dialogs</a> - <a class="reference external" href="#keyboard">Keyboard</a> - <a class="reference external" href="#mouse">Mouse</a> -
+<a class="reference external" href="#store">Store</a> - <a class="reference external" href="#system">System</a> - <a class="reference external" href="#window">Window</a></p>
+</div>
+<div class="section" id="clipboard">
+<h1>Clipboard<a class="headerlink" href="#clipboard" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#fill_clipboard">fill_clipboard</a></p></li>
+<li><p><a class="reference external" href="#fill_selection">fill_selection</a></p></li>
+<li><p><a class="reference external" href="#get_clipboard">get_clipboard</a></p></li>
+<li><p><a class="reference external" href="#get_selection">get_selection</a></p></li>
+</ul>
+<div class="section" id="fill-clipboard">
+<h2>fill_clipboard<a class="headerlink" href="#fill-clipboard" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">fill_clipboard</span></code> copies the supplied text into the clipboard.</p>
+<p>The script does the following:</p>
+<ol class="arabic simple">
+<li><p>Copies the text ‘Hello World’ to the clipboard.</p></li>
+<li><p>Waits 0.2 seconds for the clipboard operation to finish. This wait is
+unlikely to be necessary for small amounts of text, but clipboard
+operations can be slow.</p></li>
+<li><p>Fetches the text from the clipboard and displays it in an info
+dialog.</p></li>
+</ol>
+<div class="section" id="fill-clipboard-script">
+<h3>fill_clipboard script<a class="headerlink" href="#fill-clipboard-script" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="n">toClip</span> <span class="o">=</span> <span class="s1">&#39;Hello World&#39;</span>
+<span class="n">clipboard</span><span class="o">.</span><span class="n">fill_clipboard</span><span class="p">(</span><span class="n">toClip</span><span class="p">)</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">fromClip</span> <span class="o">=</span> <span class="n">clipboard</span><span class="o">.</span><span class="n">get_clipboard</span><span class="p">()</span>
+
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Clipboard contents&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">fromClip</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+</pre></div>
+</div>
+<div class="section" id="fill-selection">
+<h4>fill_selection<a class="headerlink" href="#fill-selection" title="Permalink to this headline">¶</a></h4>
+<p>fill_selection copies text into the X selection, that is the X11 PRIMARY
+selection (<a class="reference external" href="https://specifications.freedesktop.org/clipboards-spec/clipboards-latest.txt">Technical
+specification</a>).</p>
+<p>The script does the following:</p>
+<ol class="arabic simple">
+<li><p>Takes the text ‘Hello World’ and copies it to the PRIMARY selection
+buffer as the upper case text ‘HELLO WORLD’.</p></li>
+<li><p>Waits 0.2 seconds for the clipboard operation to finish. This wait is
+unlikely to be necessary for small amounts of text, but clipboard
+operations can be slow.</p></li>
+<li><p>Presses the middle mouse button to paste the text from the selection
+buffer.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="fill-selection-script">
+<h3>fill_selection script<a class="headerlink" href="#fill-selection-script" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span>
+<span class="n">clipboard</span><span class="o">.</span><span class="n">fill_selection</span><span class="p">(</span><span class="n">cb</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="c1"># click on the current cursor position</span>
+<span class="n">mouse</span><span class="o">.</span><span class="n">click_relative_self</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># button 2 is the middle mouse button</span>
+</pre></div>
+</div>
+<div class="section" id="get-clipboard">
+<h4>get_clipboard<a class="headerlink" href="#get-clipboard" title="Permalink to this headline">¶</a></h4>
+<p>The script does the following:</p>
+<ol class="arabic simple">
+<li><p>Uses get_clipboard to copy the text that is on the clipboard.</p></li>
+<li><p>Waits 0.2 seconds for the clipboard operation to finish. This wait is
+unlikely to be necessary for small amounts of text, but clipboard
+operations can be slow.</p></li>
+<li><p>Sends the text the current application as upper case text.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="get-clipboard-script">
+<h3>get_clipboard script<a class="headerlink" href="#get-clipboard-script" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">clipboard</span><span class="o">.</span><span class="n">get_clipboard</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">keyboard</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">cb</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="section" id="get-selection">
+<h4>get_selection<a class="headerlink" href="#get-selection" title="Permalink to this headline">¶</a></h4>
+<p>The script does the following:</p>
+<ol class="arabic simple">
+<li><p>Copies the selected text from the current application. If there is an
+error, the script displays an info dialog that says ‘No text
+selected’.</p></li>
+<li><p>Waits 0.2 seconds for the clipboard operation to finish. This wait is
+unlikely to be necessary for small amounts of text, but clipboard
+operations can be slow.</p></li>
+<li><p>Shows the copied text in an info dialog.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="get-selection-script">
+<h3>get_selection script<a class="headerlink" href="#get-selection-script" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">selText</span> <span class="o">=</span> <span class="n">clipboard</span><span class="o">.</span><span class="n">get_selection</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Text from selection&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">selText</span><span class="p">)</span>
+
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;No text selected&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s1">&#39;No text in X selection&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dialogs">
+<h1>Dialogs<a class="headerlink" href="#dialogs" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#calendar-dialog">Calendar dialog</a></p></li>
+<li><p><a class="reference external" href="#directory-chooser-dialog">Directory Chooser dialog</a></p></li>
+<li><p><a class="reference external" href="#information-dialog">Information dialog</a></p></li>
+<li><p><a class="reference external" href="#input-dialog">Input dialog</a></p></li>
+<li><p><a class="reference external" href="#multiple-selection-list-menu">Multiple-selection list menu</a></p></li>
+<li><p><a class="reference external" href="#open-file-dialog">Open File dialog</a></p></li>
+<li><p><a class="reference external" href="#password-input-dialog">Password input dialog</a></p></li>
+<li><p><a class="reference external" href="#save-as-dialog">Save As dialog</a></p></li>
+<li><p><a class="reference external" href="#single-selection-list-menu">Single-selection list menu</a></p></li>
+</ul>
+<div class="section" id="calendar-dialog">
+<h2>Calendar dialog<a class="headerlink" href="#calendar-dialog" title="Permalink to this headline">¶</a></h2>
+<p>The script does the following:</p>
+<ol class="arabic">
+<li><p>Displays a save as file dialog.</p>
+<p>The dialog returns a tuple that contains the following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the date that was specified on the
+dialog, using the format YYYY-MM-DD.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the save as file dialog.</p></li>
+<li><p>The date that was specified on the dialog.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span><span class="p">,</span> <span class="n">date</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">calendar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Choose a date&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>
+            <span class="c1"># width is extra zenity parameter. See the zenity manpage for details.</span>
+            <span class="c1"># this is our fancy faux way of saying:  THIS code BREAKS. it is worthless.</span>
+
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;The date you chose was&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="directory-chooser-dialog">
+<h2>Directory Chooser dialog<a class="headerlink" href="#directory-chooser-dialog" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">tuple(int, str)</div>
+<div class="line">choose_directory(self, title=‘Select Directory’, initialDir=‘~’,
+**kwargs)</div>
+</div>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays a directory chooser dialog.</p>
+<p>The dialog returns a tuple that contains the following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the full path of the directory that
+was specified on the dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the directory chooser dialog.</p></li>
+<li><p>The full path of the directory that was specified on the dialog.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span><span class="p">,</span> <span class="n">dirName</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">choose_directory</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Choose a directory&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;The directory you chose was&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">dirName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="information-dialog">
+<h2>Information dialog<a class="headerlink" href="#information-dialog" title="Permalink to this headline">¶</a></h2>
+<p>This script displays an information dialog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weather</span> <span class="o">=</span> <span class="s1">&#39;Sunny with some showers&#39;</span>
+<span class="n">retCode</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Weather Forecast&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="n">myMessage</span> <span class="o">=</span> <span class="n">retCode</span> <span class="o">+</span> <span class="n">user</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Weather Forecast&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-dialog">
+<h2>Input dialog<a class="headerlink" href="#input-dialog" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays an input dialog.</p>
+<p>The Input dialog returns a tuple that contains the following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the text that was entered on the
+input dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the input dialog.</p></li>
+<li><p>The text that was entered on the input dialog.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span><span class="p">,</span> <span class="n">userInput</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">input_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Input required&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s1">&#39;Enter a string&#39;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="s1">&#39;My string&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra zenity parameter</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;The string you entered&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">userInput</span><span class="p">)</span>  <span class="c1"># **</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-selection-list-menu">
+<h2>Multiple-selection list menu<a class="headerlink" href="#multiple-selection-list-menu" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays a multiple-selection list.</p>
+<p>The multiple-selection list returns a tuple that contains the
+following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A list of string values, each one of which is the text of an
+option that was selected on the dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the multiple-selection list.</p></li>
+<li><p>A list that contains the text of each item that was selected on
+the multiple-selection list.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">optionShapes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Square&#39;</span><span class="p">,</span> <span class="s1">&#39;Triangle&#39;</span><span class="p">,</span> <span class="s1">&#39;Rectangle&#39;</span><span class="p">]</span>
+
+<span class="n">retCode</span><span class="p">,</span> <span class="n">choices</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">list_menu_multi</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">optionShapes</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Choose all shapes that have four sides&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s1">&#39;Shapes&#39;</span><span class="p">,</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="s1">&#39;Square,Rectangle&#39;</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="s1">&#39;250&#39;</span><span class="p">)</span> <span class="c1"># height is extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>  <span class="c1"># width is extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">:</span>
+        <span class="n">myMessage</span> <span class="o">=</span> <span class="n">myMessage</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">item</span>
+
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Your choice was&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="open-file-dialog">
+<h2>Open File dialog<a class="headerlink" href="#open-file-dialog" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays an open file dialog.</p>
+<p>The dialog returns a tuple that contains the following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the full path of the file that was
+specified on the dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the open file dialog.</p></li>
+<li><p>The full path of the file that was specified on the dialog.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span><span class="p">,</span> <span class="n">fName</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Open File&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>  <span class="c1"># width is extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;The file you chose was&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">fName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="password-input-dialog">
+<h2>Password input dialog<a class="headerlink" href="#password-input-dialog" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays a password input dialog.</p>
+<p>The password input dialog returns a tuple that contains the
+following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the plain text password that was
+entered on the dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the password input dialog.</p></li>
+<li><p>The password that was entered on the password input dialog.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span><span class="p">,</span> <span class="n">pwd</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">password_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Enter password&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;Enter password&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;The password you entered&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">pwd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="save-as-dialog">
+<h2>Save As dialog<a class="headerlink" href="#save-as-dialog" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays a save as file dialog.</p>
+<p>The dialog returns a tuple that contains the following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the full path of the file that was
+specified on the dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the save as file dialog.</p></li>
+<li><p>The full path of the file that was specified on the dialog.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span><span class="p">,</span> <span class="n">fName</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Save As&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You chose to save file&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">fName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="single-selection-list-menu">
+<h2>Single-selection list menu<a class="headerlink" href="#single-selection-list-menu" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Displays a single-selection list.</p>
+<p>The single-selection list menu returns a tuple that contains the
+following:</p>
+<ul class="simple">
+<li><p>An integer value that shows the exit value from the script. This
+value is 0 for success, an integer for error.</p></li>
+<li><p>A string value that contains the text of the selection from the
+dialog.</p></li>
+</ul>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the single-selection list.</p></li>
+<li><p>The text of the item that was selected on the single-selection
+list.</p></li>
+</ul>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">optionColours</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Yellow&#39;</span><span class="p">]</span>
+
+<span class="n">retCode</span><span class="p">,</span> <span class="n">choice</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">list_menu</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">optionColours</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Choose your favourite colour&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s1">&#39;Colours&#39;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">,</span>  <span class="c1"># width is an extra zenity parameter. See the zenity manpage for details.</span>
+    <span class="n">height</span><span class="o">=</span><span class="s1">&#39;250&#39;</span><span class="p">)</span> <span class="c1"># height is an extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Dialog exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You cancelled the dialog&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>  <span class="c1"># width is an extra zenity parameter. See the zenity manpage for details.</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Your choice was&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">choice</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="keyboard">
+<h1>Keyboard<a class="headerlink" href="#keyboard" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#fake-key-press">Fake key press</a></p></li>
+<li><p><a class="reference external" href="#press-key">Press key</a></p></li>
+<li><p><a class="reference external" href="#releases-key">Release key</a></p></li>
+<li><p><a class="reference external" href="#send-key">Send key</a></p></li>
+<li><p><a class="reference external" href="#send-keys">Send keys</a></p></li>
+<li><p><a class="reference external" href="#wait-for-key-press">Wait for key press</a></p></li>
+</ul>
+<div class="section" id="fake-key-press">
+<h2>Fake key press<a class="headerlink" href="#fake-key-press" title="Permalink to this headline">¶</a></h2>
+<p>Fake key presses can be useful to send key presses if an application
+does not respond to <a class="reference external" href="#send-key">Send key</a>.</p>
+<p>This script sends ‘&lt;down&gt;’ five times.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">keyboard</span><span class="o">.</span><span class="n">fake_keypress</span><span class="p">(</span><span class="s1">&#39;&lt;down&gt;&#39;</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="press-key">
+<h2>Press key<a class="headerlink" href="#press-key" title="Permalink to this headline">¶</a></h2>
+<p><strong>press_key</strong> makes AutoKey hold down a key until it is specifically
+released.</p>
+<p>This script presses &lt;ctrl&gt;, then sends ‘d’ five times, and then releases
+&lt;ctrl&gt;.</p>
+<p>See <a class="reference external" href="#release-key">Release key</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">keyboard</span><span class="o">.</span><span class="n">press_key</span><span class="p">(</span><span class="s1">&#39;&lt;ctrl&gt;&#39;</span><span class="p">)</span>
+<span class="n">keyboard</span><span class="o">.</span><span class="n">send_key</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">keyboard</span><span class="o">.</span><span class="n">release_key</span><span class="p">(</span><span class="s1">&#39;&lt;ctrl&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="release-key">
+<h2>Release key<a class="headerlink" href="#release-key" title="Permalink to this headline">¶</a></h2>
+<p><strong>release_key</strong> releases a key that has previously been pressed by
+<strong>press_key</strong>.</p>
+<p>See <a class="reference external" href="#press-key">Press_key</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">keyboard</span><span class="o">.</span><span class="n">press_key</span><span class="p">(</span><span class="s1">&#39;&lt;ctrl&gt;&#39;</span><span class="p">)</span>
+<span class="n">keyboard</span><span class="o">.</span><span class="n">fake_keypress</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">keyboard</span><span class="o">.</span><span class="n">release_key</span><span class="p">(</span><span class="s1">&#39;&lt;ctrl&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="send-key">
+<h2>Send key<a class="headerlink" href="#send-key" title="Permalink to this headline">¶</a></h2>
+<p><strong>send_key</strong> sends a single keystroke one or more times.</p>
+<p>The script sends ‘z’ three times.</p>
+<p>send_key sends a single keystroke. You cannot use send_key on its own to
+send keys that are modified with Crtl, Shift, or Alt, for example.</p>
+<p>If you want to use modifiers, use either <a class="reference external" href="#send-keys">send_keys</a> or
+<a class="reference external" href="#press-key">press_key</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">keyboard</span><span class="o">.</span><span class="n">send_key</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="send-keys">
+<h2>Send keys<a class="headerlink" href="#send-keys" title="Permalink to this headline">¶</a></h2>
+<p><strong>send_keys</strong> sends a sequence of keystrokes.</p>
+<p>The scripts sends ‘Hello World!’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">keyboard</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wait-for-key-press">
+<h2>Wait for key press<a class="headerlink" href="#wait-for-key-press" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic">
+<li><p>Waits for the user to press &lt;ctrl&gt;+d.</p>
+<p>The function returns a boolean.</p>
+</li>
+<li><p>Displays an information dialog to show one of the following:</p>
+<ul class="simple">
+<li><p>The error code, if any, from the <strong>wait_for_keypress</strong> function.</p></li>
+<li><p>A message to say that you have pressed &lt;ctrl&gt;+d.</p></li>
+</ul>
+</li>
+</ol>
+<p>You cannot use this function to wait for modifier keys, such as &lt;ctrl&gt;,
+on their own</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span> <span class="o">=</span> <span class="n">keyboard</span><span class="o">.</span><span class="n">wait_for_keypress</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="n">modifiers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&lt;ctrl&gt;&#39;</span><span class="p">],</span><span class="n">timeOut</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">retCode</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Wait for keypress exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;You pressed &lt;ctrl&gt;+d&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter.  See the zenity manpage for details.</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Wait for keypress exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Timeout&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mouse">
+<h1>Mouse<a class="headerlink" href="#mouse" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#click_absolute">Click_absolute</a></p></li>
+<li><p><a class="reference external" href="#click_relative">Click_relative</a></p></li>
+<li><p><a class="reference external" href="#click_relative_self">Click_relative_self</a></p></li>
+<li><p><a class="reference external" href="#wait_for_click">Wait_for_click</a></p></li>
+</ul>
+<div class="section" id="click-absolute">
+<h2>Click_absolute<a class="headerlink" href="#click-absolute" title="Permalink to this headline">¶</a></h2>
+<p>click_absolute sends a mouse click relative to the whole screen.</p>
+<p>The script clicks the left mouse button at position x=200, y=300
+relative to the screen.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mouse buttons: left=1, middle=2, right=3</span>
+<span class="n">mouse</span><span class="o">.</span><span class="n">click_absolute</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="click-relative">
+<h2>Click_relative<a class="headerlink" href="#click-relative" title="Permalink to this headline">¶</a></h2>
+<p>click_relative sends a mouse click relative to the active window.</p>
+<p>The script clicks the left mouse button at position x=200, y=300 on the
+current window.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mouse buttons: left=1, middle=2, right=3</span>
+<span class="n">mouse</span><span class="o">.</span><span class="n">click_relative</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="click-relative-self">
+<h2>Click_relative_self<a class="headerlink" href="#click-relative-self" title="Permalink to this headline">¶</a></h2>
+<p>click_relative sends a mouse click relative to the current mouse cursor
+position.</p>
+<p>The script waits for 4 seconds and then clicks the left mouse button at
+position x=100, y=150 relative to the current mouse cursor position.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># mouse buttons: left=1, middle=2, right=3</span>
+<span class="n">mouse</span><span class="o">.</span><span class="n">click_relative_self</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wait-for-click">
+<h2>Wait_for_click<a class="headerlink" href="#wait-for-click" title="Permalink to this headline">¶</a></h2>
+<p>wait_for_click waits for a mouse button to be clicked. You specify which
+mouse button to wait for and the maximum time to wait.</p>
+<p>The script waits for a maximum of 10 seconds for a left click. When the
+click is detected the script displays a dialog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mouse buttons: left=1, middle=2, right=3</span>
+<span class="n">mouse</span><span class="o">.</span><span class="n">wait_for_click</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">timeOut</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Click detected&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;You clicked the left button&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="store">
+<h1>Store<a class="headerlink" href="#store" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#get-global-value">Get global value</a></p></li>
+<li><p><a class="reference external" href="#get-value">Get value</a></p></li>
+<li><p><a class="reference external" href="#has-key">Has key</a></p></li>
+<li><p><a class="reference external" href="#remove-global-value">Remove global value</a></p></li>
+<li><p><a class="reference external" href="#remove-value">Remove value</a></p></li>
+<li><p><a class="reference external" href="#set-global-value">Set global value</a></p></li>
+<li><p><a class="reference external" href="#set-value">Set value</a></p></li>
+<li><p><a class="reference external" href="https://github.com/autokey/autokey/wiki/Scripts---samples#autoclicker-with-toggle-using-globals">Example</a></p></li>
+</ul>
+<div class="section" id="get-global-value">
+<h2>Get global value<a class="headerlink" href="#get-global-value" title="Permalink to this headline">¶</a></h2>
+<p>This script sets global value “myValue” to “hello” and then gets the
+value that has been set and displays it in an info dialog.</p>
+<p>Global values can be accessed by all AutoKey scripts. The values are
+available in future AutoKey sessions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span><span class="o">.</span><span class="n">set_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of global value myValue&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-value">
+<h2>Get value<a class="headerlink" href="#get-value" title="Permalink to this headline">¶</a></h2>
+<p>This script sets local value “myLocalValue” to “My local value” and then
+gets the value that has been set and displays it in an info dialog.</p>
+<p>Local script variables can be accessed only by the script that wrote
+them. The values are available in future AutoKey sessions.</p>
+<p>Script variables can be accessed only by the script that wrote them. The
+values are available in future AutoKey sessions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of local value myValue&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="has-key">
+<h2>Has key<a class="headerlink" href="#has-key" title="Permalink to this headline">¶</a></h2>
+<p>This script checks to see if a value has been stored by checking to see
+if the key is defined. This function makes no differentiation between a
+local and global value in regards to the Store. The function returns a
+boolean of true or false.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">store</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">):</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Value Exists?&quot;</span><span class="p">,</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-global-value">
+<h2>Remove global value<a class="headerlink" href="#remove-global-value" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic simple">
+<li><p>Sets global value “myValue” to “hello”</p></li>
+<li><p>Gets the value that has been set and displays it in an info dialog</p></li>
+<li><p>Removes global value “myValue”</p></li>
+<li><p>Attempts to get the value of “myValue”, but fails because “myValue”
+no longer exists.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span><span class="o">.</span><span class="n">set_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of global value myValue&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+
+<span class="n">store</span><span class="o">.</span><span class="n">remove_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of global value myValue&#39;</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Global value myValue&#39;</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="s2">&quot;myValue does not exist&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-value">
+<h2>Remove value<a class="headerlink" href="#remove-value" title="Permalink to this headline">¶</a></h2>
+<p>This script does the following:</p>
+<ol class="arabic simple">
+<li><p>Sets local value “myValue” to “hello”</p></li>
+<li><p>Gets the value that has been set and displays it in an info dialog</p></li>
+<li><p>Removes local value “myValue”</p></li>
+<li><p>Attempts to get the value of “myValue”, but fails because “myValue”
+no longer exists.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of local value myValue&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+
+<span class="n">store</span><span class="o">.</span><span class="n">remove_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of local value myValue&#39;</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Local value myValue&#39;</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="s2">&quot;myValue does not exist&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span> <span class="c1"># width is extra Zenity parameter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-global-value">
+<h2>Set global value<a class="headerlink" href="#set-global-value" title="Permalink to this headline">¶</a></h2>
+<p>This script sets global value “myValue” to “hello” and then gets the
+value that has been set and displays it in an info dialog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span><span class="o">.</span><span class="n">set_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_global_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of global value myValue&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-value">
+<h2>Set value<a class="headerlink" href="#set-value" title="Permalink to this headline">¶</a></h2>
+<p>This script sets local value “myLocalValue” to “My local value” and then
+gets the value that has been set and displays it in an info dialog.</p>
+<p>Local script variables can be accessed only by the script that wrote
+them. The values are available in future AutoKey sessions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">,</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;myValue&quot;</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Value of local value myValue&#39;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;200&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="system">
+<h1>System<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#create_file">Create_file</a></p></li>
+<li><p><a class="reference external" href="#exec_command">Exec_command</a></p></li>
+</ul>
+<div class="section" id="create-file">
+<h2>Create_file<a class="headerlink" href="#create-file" title="Permalink to this headline">¶</a></h2>
+<p>create_file creates a file in the file system with the specified
+contents, if any.</p>
+<p>The script creates file /tmp/myFile.txt with the contents “Hello World”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">system</span><span class="o">.</span><span class="n">create_file</span><span class="p">(</span><span class="s1">&#39;/tmp/myFile.txt&#39;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="s1">&#39;Hello World&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exec-command">
+<h2>Exec_command<a class="headerlink" href="#exec-command" title="Permalink to this headline">¶</a></h2>
+<p>exec_command executes a system command.</p>
+<p>The script executes the command ‘ls /tmp’ and captures the output. The
+script then saves the listing to file ‘/tmp/myListing.txt’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s1">&#39;ls /tmp/&#39;</span><span class="p">,</span> <span class="n">getOutput</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">system</span><span class="o">.</span><span class="n">create_file</span><span class="p">(</span><span class="s1">&#39;/tmp/myListing.txt&#39;</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="window">
+<h1>Window<a class="headerlink" href="#window" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#activate-window">Activate window</a></p></li>
+<li><p><a class="reference external" href="#close-window">Close window</a></p></li>
+<li><p><a class="reference external" href="#get-class-of-active-window">Get class of active window</a></p></li>
+<li><p><a class="reference external" href="#get-title-of-active-window">Get title of active window</a></p></li>
+<li><p><a class="reference external" href="#get-window-geometry">Get window geometry</a></p></li>
+<li><p><a class="reference external" href="#move-window-to-different-desktop">Move window to different
+desktop</a></p></li>
+<li><p><a class="reference external" href="#resize-or-move-window">Resize or move window</a></p></li>
+<li><p><a class="reference external" href="#set-window-property">Set window property</a></p></li>
+<li><p><a class="reference external" href="#switch-to-different-desktop">Switch to different desktop</a></p></li>
+<li><p><a class="reference external" href="#wait-for-window-to-exist">Wait for window to exist</a></p></li>
+<li><p><a class="reference external" href="#wait-for-window-to-have-focus">Wait for window to have focus</a></p></li>
+</ul>
+<div class="section" id="activate-window">
+<h2>Activate window<a class="headerlink" href="#activate-window" title="Permalink to this headline">¶</a></h2>
+<p>Script 1 activates the window with ‘Atom’ as part of the window title.
+If the window is on a different desktop the script automatically changes
+to that desktop.</p>
+<p>Script 2 activates the window with ‘atom.Atom’ as its class name.</p>
+</div>
+<div class="section" id="activate-window-script-1">
+<h2>Activate window script 1<a class="headerlink" href="#activate-window-script-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s1">&#39;Atom&#39;</span><span class="p">,</span> <span class="n">switchDesktop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="activate-window-script-2">
+<h2>Activate window script 2<a class="headerlink" href="#activate-window-script-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s1">&#39;atom.Atom&#39;</span><span class="p">,</span> <span class="n">switchDesktop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">matchClass</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="close-window">
+<h2>Close Window<a class="headerlink" href="#close-window" title="Permalink to this headline">¶</a></h2>
+<p>Script 1 closes the window with ‘Atom’ as part of the window title.</p>
+<p>Script 2 closes the window with ‘atom.Atom’ as its class name.</p>
+</div>
+<div class="section" id="close-window-script-1">
+<h2>Close window script 1<a class="headerlink" href="#close-window-script-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;Atom&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="close-window-script-2">
+<h2>Close window script 2<a class="headerlink" href="#close-window-script-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;atom.Atom&#39;</span><span class="p">,</span> <span class="n">matchClass</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-class-of-active-window">
+<h2>Get class of active window<a class="headerlink" href="#get-class-of-active-window" title="Permalink to this headline">¶</a></h2>
+<p>This script gets the class of the active window and then displays it in
+an info dialog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">winClass</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get_active_class</span><span class="p">()</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Window class&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">winClass</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-title-of-active-window">
+<h2>Get title of active window<a class="headerlink" href="#get-title-of-active-window" title="Permalink to this headline">¶</a></h2>
+<p>This script gets the title of the active window and then displays it in
+an info dialog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">winTitle</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get_active_title</span><span class="p">()</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Window title&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">winTitle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-window-geometry">
+<h2>Get window geometry<a class="headerlink" href="#get-window-geometry" title="Permalink to this headline">¶</a></h2>
+<p>This script gets the geometry of the active window and then displays an
+info dialog that shows the values.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get_active_geometry</span><span class="p">()</span>
+    <span class="n">winGeometry</span> <span class="o">=</span> <span class="s1">&#39;X-origin: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">Y-origin: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">Width: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">Height: </span><span class="si">%s</span><span class="s1">&#39;</span>  <span class="o">%</span><span class="p">(</span><span class="n">geo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">geo</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">geo</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">geo</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Window geometry&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">winGeometry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="move-window-to-different-desktop">
+<h2>Move window to different desktop<a class="headerlink" href="#move-window-to-different-desktop" title="Permalink to this headline">¶</a></h2>
+<p>This script moves the ‘Unsaved Document’ window to desktop three.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">move_to_desktop</span><span class="p">(</span><span class="s1">&#39;Unsaved Document&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">matchClass</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># desktop number is an integer. The first desktop is 0.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-window-property">
+<h2>Set window property<a class="headerlink" href="#set-window-property" title="Permalink to this headline">¶</a></h2>
+<p>This script maximizes horizontally the ‘Unsaved Document’ window.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s1">&#39;Unsaved Document&#39;</span><span class="p">,</span> <span class="s1">&#39;add&#39;</span><span class="p">,</span><span class="s1">&#39;maximized_horz&#39;</span><span class="p">,</span> <span class="n">matchClass</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="switch-to-different-desktop">
+<h2>Switch to different desktop<a class="headerlink" href="#switch-to-different-desktop" title="Permalink to this headline">¶</a></h2>
+<p>This script switches focus to desktop two.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">switch_desktop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># The first desktop is 0.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wait-for-window-to-exist">
+<h2>Wait for window to exist<a class="headerlink" href="#wait-for-window-to-exist" title="Permalink to this headline">¶</a></h2>
+<p>This script waits up to five seconds for a specified window to exist and
+then displays an info dialog that shows the exit code.</p>
+<p>The exit code is <strong>True</strong> if the window has focus, <strong>False</strong> if the
+script times out.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">wait_for_exist</span><span class="p">(</span><span class="s1">&#39;Unsaved Document&#39;</span><span class="p">,</span> <span class="n">timeOut</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Exit code&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wait-for-window-to-have-focus">
+<h2>Wait for window to have focus<a class="headerlink" href="#wait-for-window-to-have-focus" title="Permalink to this headline">¶</a></h2>
+<p>This script waits five seconds for the Thunderbird window to have focus
+and then displays an info dialog that shows the exit code.</p>
+<p>The exit code is <strong>True</strong> if the window has focus, <strong>False</strong> if the
+script times out.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retCode</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">wait_for_focus</span><span class="p">(</span><span class="s1">&#39;.*Thunderbird&#39;</span><span class="p">,</span> <span class="n">timeOut</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">myMessage</span> <span class="o">=</span> <span class="s1">&#39;Exit code was: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">retCode</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">info_dialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Exit code&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">myMessage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resize-or-move-window">
+<h2>Resize or move window<a class="headerlink" href="#resize-or-move-window" title="Permalink to this headline">¶</a></h2>
+<p>This script resizes the ‘Unsaved Document’ window.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">window</span><span class="o">.</span><span class="n">resize_move</span><span class="p">(</span><span class="s1">&#39;Unsaved Document&#39;</span><span class="p">,</span> <span class="n">xOrigin</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">yOrigin</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">matchClass</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AutoKey</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Autokey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Thomas Hess.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/API-Examples.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

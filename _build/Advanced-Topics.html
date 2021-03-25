@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating New Modifier Keys &#8212; AutoKey 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="creating-new-modifier-keys">
+<h1>Creating New Modifier Keys<a class="headerlink" href="#creating-new-modifier-keys" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://youtu.be/pDrPr4PcytY">Tutorial</a> by Dell Anderson - New
+(10/2017)</p>
+<p>This short tutorial shows you how to assign a key to Hyper-R so you can
+use it in addition to the more common modifier keys like Super, Shift,
+Alt, and Ctrl.</p>
+</div>
+<div class="section" id="writing-macros-which-do-more-than-one-thing">
+<h1>Writing Macros Which Do More Than One Thing<a class="headerlink" href="#writing-macros-which-do-more-than-one-thing" title="Permalink to this headline">¶</a></h1>
+<p>We get a number of questions about getting AutoKey to do things like
+detecting keypresses, holding keys down, or interacting with the
+computer and user based on more than one event.</p>
+<p>AutoKey is designed to continue detecting triggers even when a macro is
+currently executing. So macros that run for some time are possible and
+will not stop subsequent macros from being triggered. However, actually
+assuring that things happen in the expected order/timing is left as an
+exercise for the reader. ;)</p>
+<p>However, it is quite possible to write errant macro code which can get
+stuck in a loop when unexpected events occur. This can cause AutoKey or
+sometimes the whole desktop to become unresponsive, so care should be
+taken when coding anything complex or concurrent.</p>
+<p>Another feature of AutoKey is that two or more macros/phrases can have
+the same trigger phrase or hotkey as long as they are defined with
+mutually exclusive window/class filters.</p>
+<p>So, for example, a macro for processing multiple variations of print
+dialogs from different applications could be coded as several separate
+macros - one for each variation - rather than as one complex macro with
+conditional code for each variation - with all of them triggered by
+pressing Ctrl+P.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AutoKey</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Autokey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Thomas Hess.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Advanced-Topics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

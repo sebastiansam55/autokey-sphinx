@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contents &#8212; AutoKey 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="contents">
+<h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="#installation-options">Installation Options</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="#package-manager-installation">Package Manager Installation</a></p>
+<ul>
+<li><p><a class="reference external" href="#debian-and-derivatives">Debian and Derivatives</a></p></li>
+<li><p><a class="reference external" href="#arch-linux">Arch</a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pip</span></code> Installation &lt;#pip-installation&gt;`__</p></li>
+</ul>
+<p><a class="reference external" href="#Dependencies">Dependencies</a></p>
+<p><a class="reference external" href="#running-autokey">Running AutoKey</a></p>
+</div>
+<div class="section" id="installation-options">
+<h1>Installation Options<a class="headerlink" href="#installation-options" title="Permalink to this headline">¶</a></h1>
+<p>There are two versions of the Python3-based AutoKey</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">autokey-gtk</span></code> - for systems using a GTK-based desktop environment
+such as GNOME, MATE, Ubuntu Unity, etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">autokey-qt</span></code> - for systems using a Qt-based desktop environment
+such as KDE Plasma, Lumina, etc.</p></li>
+</ul>
+<p>AutoKey can be most easily installed using one of these two methods:</p>
+<ul class="simple">
+<li><p>package manager</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pip</span></code> &lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Pip_(package_manager)">https://en.wikipedia.org/wiki/Pip_(package_manager)</a>&gt;`__</p></li>
+</ul>
+<p><strong>NOTE:</strong> Remove existing AutoKey installation before attempting these
+steps.</p>
+<div class="section" id="removing-existing-autokey">
+<h2>Removing Existing AutoKey<a class="headerlink" href="#removing-existing-autokey" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Quit Autokey - verify the AutoKey icon is not present in your system
+tray</p></li>
+<li><p>Backup your <code class="docutils literal notranslate"><span class="pre">~/.config/autokey</span></code> directory if you wish to save
+existing scripts and phrases. These files are not touched normally,
+but upgrading AutoKey may alter the script or phrase configuration in
+non-backwards-compatible ways, thus may make reverting to the
+previous installation impossible.</p></li>
+<li><p>Uninstall the existing AutoKey</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="package-manager-installation">
+<h1>Package Manager Installation<a class="headerlink" href="#package-manager-installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="debian-and-derivatives">
+<h2>Debian and Derivatives<a class="headerlink" href="#debian-and-derivatives" title="Permalink to this headline">¶</a></h2>
+<p>This section applies to Debian and derivatives such as Ubuntu and Mint.
+These steps assume that you have Python version 3.5 or higher.</p>
+<p>AutoKey releases can be downloaded from
+<a class="reference external" href="https://github.com/autokey/autokey/releases/">releases</a> page.</p>
+<p>Either use the supplied Debian packages attached to the GitHub release,
+or build your own Debian packages.</p>
+<div class="line-block">
+<div class="line">Using the pre-built packages:</div>
+<div class="line">Chose the GUI you want and then download the
+<code class="docutils literal notranslate"><span class="pre">autokey-common_${VERSION}_all.deb</span></code> package plus the chosen frontend
+package (<code class="docutils literal notranslate"><span class="pre">autokey-gtk_${VERSION}_all.deb</span></code> or
+<code class="docutils literal notranslate"><span class="pre">autokey-qt_${VERSION}_all.deb</span></code>) to a directory on your system.</div>
+</div>
+<p>Building your own packages is described on
+<a class="reference external" href="https://github.com/autokey/autokey/wiki/Packaging">this</a> page.</p>
+<p>After you obtained the Debian packages, open a terminal at the directory
+containing the packages and use the following commands to install the
+packages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VERSION=&quot;0.95.7-0&quot;    # substitute with the version you downloaded
+sudo dpkg --install autokey-common_${VERSION}_all.deb autokey-gtk_${VERSION}_all.deb
+sudo apt --fix-broken install
+</pre></div>
+</div>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">dpkg</span></code> complaining about missing dependencies, it is
+crucial to run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">--fix-broken</span> <span class="pre">install</span></code> afterwards. This will
+make sure that all dependencies are correctly installed. In case this
+does not fix the dependencies, please open an issue on the GitHub issue
+tracker.</p>
+<p>For reference, missing dependencies manifest in error messages similar
+to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dpkg</span><span class="p">:</span> <span class="n">dependency</span> <span class="n">problems</span> <span class="n">prevent</span> <span class="n">configuration</span> <span class="n">of</span> <span class="n">autokey</span><span class="o">-</span><span class="n">common</span><span class="p">:</span>
+  <span class="n">autokey</span><span class="o">-</span><span class="n">common</span> <span class="n">depends</span> <span class="n">on</span> <span class="n">python3</span><span class="o">-</span><span class="n">pyinotify</span><span class="p">;</span> <span class="n">however</span><span class="p">:</span>
+  <span class="n">Package</span> <span class="n">python3</span><span class="o">-</span><span class="n">pyinotify</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">installed</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Both the <code class="docutils literal notranslate"><span class="pre">-common</span></code> and GUI package need to be installed at the same
+time and <code class="docutils literal notranslate"><span class="pre">dpkg</span></code> will get it right while <code class="docutils literal notranslate"><span class="pre">apt</span></code> might not. If you
+prefer to use the QT front end, you can download and install that
+instead of (or in addition to) the GTK GUI. The second command will
+install all the dependencies from the official repositories.</p>
+<p>Since AutoKey is a Python3 application, it is largely independent of
+particular distribution releases and should work on most relatively
+fresh distributions. It is fine, as long as apt can resolve the
+dependencies.</p>
+</div>
+<div class="section" id="arch-linux">
+<h2>Arch Linux<a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h2>
+<p>Up to date packages for both the <a class="reference external" href="aur-gtk">GTK</a> and <a class="reference external" href="aur-qt">Qt</a>
+versions are available in the Arch User Repository.</p>
+<p>If you wish to manually install AutoKey, use the dependencies specified
+in the AUR as a reference, for what has to be installed.</p>
+<p>Errors with QT plugins may be solved by updating the QT plugin path.
+<code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">QT_PLUGIN_PATH=/usr/lib/qt/plugins</span></code></p>
+</div>
+</div>
+<div class="section" id="pip-installation">
+<h1><code class="docutils literal notranslate"><span class="pre">pip</span></code> Installation<a class="headerlink" href="#pip-installation" title="Permalink to this headline">¶</a></h1>
+<p>If you are using a distribution other than those listed above or if you
+want to install AutoKey from GitHub you can use this
+<code class="docutils literal notranslate"><span class="pre">`pip</span></code> &lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Pip_(package_manager)">https://en.wikipedia.org/wiki/Pip_(package_manager)</a>&gt;`__
+installation method.</p>
+<p>This assumes you have Python version 3.5 or higher installed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">git</span></code> is not already installed, optionally <a class="reference external" href="https://git-scm.com/download/linux">install
+git</a> to directly install from
+GitHub. Alternatively, you can perform the install from a snapshot
+archive, generated by GitHub. You can download such a ZIP archive
+containing the source code from the <a class="reference external" href="https://github.com/autokey/autokey/releases">GitHub release
+page</a>. Click on a
+release, then download one of the <code class="docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code> archives and unpack
+it.</p>
+<p>If the Python3 version of <code class="docutils literal notranslate"><span class="pre">pip</span></code> is not already installed, install
+<code class="docutils literal notranslate"><span class="pre">pip</span></code> using these
+<a class="reference external" href="https://packaging.python.org/install_requirements_linux/#installing-pip-setuptools-wheel-with-linux-package-managers">instructions</a>.</p>
+<p>The following Python3 dependencies need to be installed. If the install
+fails, look at your error messages - you might need to manually install
+one or more of the dependencies. Many dependencies are not specified in
+<code class="docutils literal notranslate"><span class="pre">setup.py</span></code>, so are not installed automatically.</p>
+<p>Installing the dependencies from PyPI may be tricky and break your
+system in unexpected ways, so prefer to install the dependencies from
+your Distribution’s package manager whenever possible. For example,
+installing <code class="docutils literal notranslate"><span class="pre">dbus-python</span></code> from PyPI will <em>shadow</em> your local
+<code class="docutils literal notranslate"><span class="pre">dbus-python</span></code> installation (even if installed later by your package
+manager), <em>including any plugins present in the system installation</em>.
+This may break software relying on the presence of those plugins, for
+example the HPLIP software.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>AutoKey depends on (regardless of the used GUI):</p>
+<p>Python 3.5</p>
+<p><a class="reference external" href="https://www.freedesktop.org/wiki/Software/DBusBindings/#python">dbus-python</a>
+[<a class="reference external" href="https://pypi.org/project/dbus-python/">PyPI</a>] - Install from your
+distribution’s repository. because installing from PyPI may break your
+system. Additionally, installing from PyPi requires a C compiler and the
+dbus C header files, because it will compile the C libraries locally at
+installation time. Spare your time and install dbus-python from your
+distribution’s repository instead.</p>
+<p><a class="reference external" href="https://github.com/seb-m/pyinotify">pyinotify</a>
+[<a class="reference external" href="https://pypi.org/project/pyinotify/">PyPI</a>]</p>
+<p><a class="reference external" href="https://github.com/python-xlib/python-xlib">python-xlib</a>
+[<a class="reference external" href="https://pypi.org/project/python-xlib/">PyPI</a>]</p>
+<p><a class="reference external" href="http://tripie.sweb.cz/utils/wmctrl/">wmctrl</a> (CLI tool) - used for
+window manipulation functions available in the Scripting API.</p>
+<p>The GTK GUI additionally depends on these packages:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package</p></th>
+<th class="head"><p>Homepage</p></th>
+<th class="head"><p><a class="reference external" href="https://pypi.org/project/PyGObject/">PyPI (Python
+Package
+In
+dex)</a>
+link</p></th>
+<th class="head"><p>Extra notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GObject
+Introspection</p></td>
+<td><p>h
+ttps://gi.readt
+hedocs.io/en/la
+test/index.html</p></td>
+<td><p>https
+://pypi.org/pro
+ject/PyGObject/</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>GTK (≥ 3.0)</p></td>
+<td></td>
+<td><p>Not available</p></td>
+<td><p>Loaded at
+runtime from
+system-provided
+C libraries by
+<code class="docutils literal notranslate"><span class="pre">GObject</span>
+<span class="pre">Introspection</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>GtkSourceView</p></td>
+<td><p><a class="reference external" href="https://wiki.gn">https://wiki.gn</a>
+ome.org/Project
+s/GtkSourceView</p></td>
+<td><p>Not available</p></td>
+<td><p>Loaded at
+runtime from
+system-provided
+C libraries by
+<code class="docutils literal notranslate"><span class="pre">GObject</span>
+<span class="pre">Introspection</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>libappindicator</p></td>
+<td></td>
+<td><p>Not available</p></td>
+<td><p>Loaded at
+runtime from
+system-provided
+C libraries by
+<code class="docutils literal notranslate"><span class="pre">GObject</span>
+<span class="pre">Introspection</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>lib
+dbus-glib-1-dev</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">zenity</span></code> CLI
+tool</p></td>
+<td><p><a class="reference external" href="https://">https://</a>
+wiki.gnome.org/
+Projects/Zenity</p></td>
+<td><p>Not available</p></td>
+<td><p>this is used
+for the
+dialogue
+windows
+available in
+the Scripting
+API</p></td>
+</tr>
+</tbody>
+</table>
+<p>The Qt5-based GUI additionally depends on:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Package</p></th>
+<th class="head"><p>Homepage</p></th>
+<th class="head"><p><a class="reference external" href="https://pypi.org/project/PyGObject/">PyPI (Python
+Package
+In
+dex)</a>
+link</p></th>
+<th class="head"><p>Extra notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PyQt5</p></td>
+<td><p><a class="reference external" href="https://w">https://w</a>
+ww.riverbankcom
+puting.com/soft
+ware/pyqt/intro</p></td>
+<td><p>h
+ttps://pypi.org
+/project/PyQt5/</p></td>
+<td><p>Prefer
+installing from
+your
+distribution.
+Check, if your
+installation
+source provides
+the <em>full</em>
+PyQt5 package.
+Some sources,
+notably the
+Ubuntu
+repository have
+split PyQt5 up
+into multiple
+modules. If so,
+you need the
+following
+additional
+modules.</p></td>
+</tr>
+<tr class="row-odd"><td><p>PyQt5 SVG
+module, if not
+bundled with
+the base
+installation</p></td>
+<td></td>
+<td><p>included in
+PyQt5 from PyPi</p></td>
+<td><p>If you
+installed from
+the Ubuntu
+repositories,
+you
+additionally
+need
+<code class="docutils literal notranslate"><span class="pre">python</span>
+<span class="pre">3-pyqt5.qtsvg</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Py
+Qt5-QScintilla2
+module, if not
+bundled with
+the base
+installation</p></td>
+<td></td>
+<td><p>included in
+PyQt5 from PyPi</p></td>
+<td><p>If you
+installed from
+the Ubuntu
+repositories,
+you
+additionally
+need
+<code class="docutils literal notranslate"><span class="pre">pytho</span>
+<span class="pre">n3-pyqt5.qsci</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kdialog</span></code> CLI
+tool</p></td>
+<td><p><a class="reference external" href="https://github">https://github</a>.
+com/KDE/kdialog</p></td>
+<td><p>Not available</p></td>
+<td><p>this is used
+for the
+dialogue
+windows
+available in
+the Scripting
+API</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pyrcc5</span></code> CLI
+tool</p></td>
+<td></td>
+<td><p>not available</p></td>
+<td><p>Installation-
+time/build-time
+only optional,
+but recommended
+dependency.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="installing-dependencies-for-debian">
+<h3>Installing Dependencies for Debian<a class="headerlink" href="#installing-dependencies-for-debian" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Needed for both GUIs:</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">dbus</span> <span class="n">python3</span><span class="o">-</span><span class="n">xlib</span> <span class="n">python3</span><span class="o">-</span><span class="n">pyinotify</span> <span class="n">wmctrl</span>
+<span class="c1"># Needed for autokey-gtk:</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">gi</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">gtk</span><span class="o">-</span><span class="mf">3.0</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">gtksource</span><span class="o">-</span><span class="mf">3.0</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">appindicator3</span><span class="o">-</span><span class="mf">0.1</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">glib</span><span class="o">-</span><span class="mf">2.0</span> <span class="n">gir1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">notify</span><span class="o">-</span><span class="mf">0.7</span> <span class="n">zenity</span>
+<span class="c1"># Needed for autokey-qt:</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">pyqt5</span> <span class="n">python3</span><span class="o">-</span><span class="n">pyqt5</span><span class="o">.</span><span class="n">qsci</span> <span class="n">python3</span><span class="o">-</span><span class="n">pyqt5</span><span class="o">.</span><span class="n">qtsvg</span> <span class="n">kdialog</span>
+<span class="c1"># Recommended installation-time/build-time dependency, if installing using pip3 or prior to self-building Debian packages</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">pyqt5</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">tools</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-dependencies-for-arch-linux">
+<h3>Installing Dependencies for Arch Linux<a class="headerlink" href="#installing-dependencies-for-arch-linux" title="Permalink to this headline">¶</a></h3>
+<p>The AUR package lists all packages needed with their respective
+Arch-specific names: <a class="reference external" href="https://aur.archlinux.org/packages/autokey-common/">https://aur.archlinux.org/packages/autokey-common/</a></p>
+</div>
+<div class="section" id="installing-dependencies-from-pypi">
+<h3>Installing Dependencies from PyPI<a class="headerlink" href="#installing-dependencies-from-pypi" title="Permalink to this headline">¶</a></h3>
+<p>TODO.</p>
+<p>(Checkout the PyPI links from the tables above.)</p>
+</div>
+<div class="section" id="installing-autokey">
+<h3>Installing AutoKey<a class="headerlink" href="#installing-autokey" title="Permalink to this headline">¶</a></h3>
+<p>Install AutoKey from the <a class="reference external" href="https://github.com/autokey/autokey">AutoKey GitHub
+repository</a> for your user only:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Install git master. Should be stable and include additional bug fixes. If in doubt, use a specific release instead
+$ pip3 install --user git+https://github.com/autokey/autokey
+# Install a specific release: Replace the version with the latest release.
+$ pip3 install --user https://github.com/autokey/autokey/archive/v0.95.7.zip
+# Or install from a local copy (git checkout or extracted release ZIP archive):
+$ pip3 install --user /replace/with/path/to/extracted/autokey/release
+</pre></div>
+</div>
+<p>AutoKey will be located in your user directory: <code class="docutils literal notranslate"><span class="pre">~/.local/bin/autokey</span></code></p>
+<p>If you run pip3 as root and omit the <code class="docutils literal notranslate"><span class="pre">--user</span></code> switch, AutoKey will be
+installed globally.</p>
+<p>For versions &gt; 0.96, you can install the Pypi dependencies for either of
+the UIs by specifying <code class="docutils literal notranslate"><span class="pre">[UI]</span></code> after the install name or URL (where
+“<code class="docutils literal notranslate"><span class="pre">UI</span></code>” is “<code class="docutils literal notranslate"><span class="pre">GTK</span></code>” or “<code class="docutils literal notranslate"><span class="pre">QT</span></code>”. For example:
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">--user</span> <span class="pre">./autokey'[QT]'</span></code></p>
+</div>
+</div>
+<div class="section" id="running-autokey">
+<h2>Running AutoKey<a class="headerlink" href="#running-autokey" title="Permalink to this headline">¶</a></h2>
+<p>In order to run AutoKey, the installation directory must be added to
+your PATH shell environment variable. If you installed AutoKey with a
+package manager or via pip3 as root, the launcher is placed in your PATH
+automatically. Note: the installation directory will vary based on which
+distribution you are using. For example, on Ubuntu 16.04 it is
+<code class="docutils literal notranslate"><span class="pre">/usr/bin/autokey</span></code>.</p>
+<p>You can run AutoKey by using your distribution’s application launcher.
+For example, on Ubuntu, just click on the super-key and type
+<code class="docutils literal notranslate"><span class="pre">autokey</span></code>. You should see the AutoKey <em>``A``</em> icon in your taskbar.
+You can right-click on the “A” icon to see some menu choices and to quit
+AutoKey.</p>
+<p>If you installed AutoKey using <code class="docutils literal notranslate"><span class="pre">pip</span></code> with the <code class="docutils literal notranslate"><span class="pre">--user</span></code> flag or if
+the installation directory was not added to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, you can set
+this temporarily (will revert at next login):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PATH=&quot;$HOME/.local/bin:$PATH&quot;
+</pre></div>
+</div>
+<p>Or you can add it permanently by following these
+<a class="reference external" href="http://stackoverflow.com/questions/14637979/how-to-permanently-set-path-on-linux">directions</a>.</p>
+<p>Either way, once <code class="docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code> as used by the pip3 installation
+method (or whichever installation directory was used) is in your
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code> you can run AutoKey by executing the applicable command for the
+version you wish to run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ autokey-gtk
+$ autokey-qt
+</pre></div>
+</div>
+<p>November 2011 Original author, Keith W. Daniels Edited by Joseph
+Pollock, troxor, ersanchez and Thomas Hess</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AutoKey</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Autokey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Thomas Hess.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Installing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

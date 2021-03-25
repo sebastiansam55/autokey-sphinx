@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PyPI (for maintainers): &#8212; AutoKey 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <p>This page explains how to package AutoKey.</p>
+<p>These instructions assume that you use a git checkout of the AutoKey
+repository and your current working directory is at the repository top
+level. If you use a Source code archive (for example a ZIP archive
+download from the front page or from the individual release pages), as
+provided by GitHub, skip the parts that involve calling <code class="docutils literal notranslate"><span class="pre">git</span></code> in the
+instructions below.</p>
+<div class="section" id="pypi-for-maintainers">
+<h1>PyPI (for maintainers):<a class="headerlink" href="#pypi-for-maintainers" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">v0</span><span class="o">.</span><span class="mf">95.7</span>
+<span class="n">Note</span><span class="p">:</span> <span class="n">checking</span> <span class="n">out</span> <span class="s1">&#39;v0.95.7&#39;</span><span class="o">.</span>
+<span class="p">[</span><span class="n">snip</span> <span class="n">git</span> <span class="n">output</span><span class="p">]</span>
+<span class="n">HEAD</span> <span class="ow">is</span> <span class="n">now</span> <span class="n">at</span> <span class="n">dc5bc5f</span> <span class="n">Release</span> <span class="n">v0</span><span class="o">.</span><span class="mf">95.7</span>
+
+<span class="o">%</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
+
+<span class="o">%</span> <span class="n">twine</span> <span class="n">upload</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">repository</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">upload</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">legacy</span><span class="o">/</span> <span class="n">dist</span><span class="o">/*</span>
+<span class="n">Enter</span> <span class="n">your</span> <span class="n">username</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">pypi</span> <span class="n">username</span><span class="o">&gt;</span>
+<span class="n">Enter</span> <span class="n">your</span> <span class="n">password</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">pypi</span> <span class="n">password</span><span class="o">&gt;</span>
+<span class="n">Uploading</span> <span class="n">distributions</span> <span class="n">to</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">upload</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">legacy</span><span class="o">/</span>
+<span class="n">Uploading</span> <span class="n">autokey</span><span class="o">-</span><span class="mf">0.95</span><span class="o">.</span><span class="mi">7</span><span class="o">-</span><span class="n">py3</span><span class="o">-</span><span class="n">none</span><span class="o">-</span><span class="nb">any</span><span class="o">.</span><span class="n">whl</span>
+<span class="o">...</span>
+<span class="n">Uploading</span> <span class="n">autokey</span><span class="o">-</span><span class="mf">0.95</span><span class="o">.</span><span class="mf">7.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debian-ubuntu-and-derivates">
+<h1>Debian, Ubuntu and derivates:<a class="headerlink" href="#debian-ubuntu-and-derivates" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://packaging.ubuntu.com/html/packaging-new-software.html">http://packaging.ubuntu.com/html/packaging-new-software.html</a> ## Building
+Debian packages locally</p>
+<div class="section" id="install-prerequisites-needed-only-once">
+<h2>Install Prerequisites (needed only once):<a class="headerlink" href="#install-prerequisites-needed-only-once" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Packaging dependencies</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">debhelper</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">dev</span> <span class="n">devscripts</span> <span class="n">git</span>
+
+<span class="c1"># Build dependencies</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="nb">all</span> <span class="n">python3</span><span class="o">-</span><span class="n">setuptools</span>
+<span class="c1"># Optional, but recommended. If you want to build an optimized Qt GUI build.</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">pyqt5</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">tools</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-the-packages-from-a-tag">
+<h2>Build the packages from a tag<a class="headerlink" href="#build-the-packages-from-a-tag" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VERSION=v0.95.7
+uscan -dd
+git checkout $VERSION
+dpkg-buildpackage -b
+</pre></div>
+</div>
+<p>Running the last command will build the packages (and some auxiliary
+files) in <em>the parent directory</em>. Also note that <code class="docutils literal notranslate"><span class="pre">dpkg-buildpackage</span></code>
+will want to GPG-sign the package using the credentials of the person
+who authored the last changelog entry. Because you (hopefully ;) ) don’t
+posses the maintainer’s private key, this signing will fail with an
+error message. This is harmless. If the failed signing is the only error
+message produced, the built packages are fully operational and can be
+installed using <code class="docutils literal notranslate"><span class="pre">dpkg</span></code>.</p>
+<div class="section" id="updating-ppa-with-latest-version-for-maintainers">
+<h3>Updating PPA with latest version (for maintainers)<a class="headerlink" href="#updating-ppa-with-latest-version-for-maintainers" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git checkout $VERSION
+
+# Build the package with Debian utils
+uscan -dd
+debuild -S
+dput &lt;your PPA identifier&gt; ../autokey_${VERSION}-1_source.changes
+# test it then go live if it works
+rm ../autokey_${VERSION}-1_source.ppa.upload
+dput &lt;your PPA identifier&gt; ../autokey_${VERSION}-1_source.changes
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="preparing-a-new-release-for-maintainers">
+<h1>Preparing a new release (for maintainers)<a class="headerlink" href="#preparing-a-new-release-for-maintainers" title="Permalink to this headline">¶</a></h1>
+<p>Before publishing a new release do: - Draft a new Release on the GitHub
+page. You can use this unpublished draft to draft the new changelog of
+the to-be released verion - Update version string in
+<code class="docutils literal notranslate"><span class="pre">`lib/autokey/common.py</span></code> &lt;<a class="reference external" href="https://github.com/autokey/autokey/blob/master/lib/autokey/common.py">https://github.com/autokey/autokey/blob/master/lib/autokey/common.py</a>&gt;`__
+- Update the
+<a class="reference external" href="https://github.com/autokey/autokey/blob/master/CHANGELOG.rst">CHANGELOG.rst</a>
+- Update the <a class="reference external" href="https://github.com/autokey/autokey/blob/master/debian/changelog">Debian
+changelog</a></p>
+<p>To update the debian changelog, use the <code class="docutils literal notranslate"><span class="pre">dch</span></code> command line tool.
+Alternatively, use your favourite text editor. Beware that the debian
+changelog is VERY format sensitive. Even slightest deviations from the
+specifications (like indention with 3 instead of 2 whitespace
+characters) will cause the Packaging process to FAIL. You don’t want to
+publish a release which can’t be packaged automatically.</p>
+<p>When finished, do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="n">lib</span><span class="o">/</span><span class="n">autokey</span><span class="o">/</span><span class="n">common</span><span class="o">.</span><span class="n">py</span> <span class="n">CHANGELOG</span><span class="o">.</span><span class="n">rst</span> <span class="n">debian</span><span class="o">/</span><span class="n">changelog</span>
+<span class="n">git</span> <span class="n">commit</span>
+<span class="c1"># Provide a nice commit message, like `Release v.0.95.7`</span>
+<span class="c1"># DO NOT PUSH. First, verify that the Debian packaging works.</span>
+<span class="c1"># If not, fix the `debian/changelog` and merge the changelog fix into the last commit</span>
+<span class="c1"># Use git commit --amend to do so.</span>
+<span class="n">git</span> <span class="n">push</span>
+</pre></div>
+</div>
+<p>When the changes are pushed, edit the release draft on the GitHub
+release page. Add the appropriate version tag to the last commit and
+Publish the release.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AutoKey</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Autokey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Thomas Hess.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Packaging.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

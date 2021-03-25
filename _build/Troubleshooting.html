@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction &#8212; AutoKey 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This page contains solutions to problems frequently experienced by users
+of AutoKey.</p>
+<div class="section" id="i-have-remapped-my-caps-lock-key-to-something-else-like-ctrl-my-defined-abbreviations-dont-work-or-the-output-case-is-inverted-after-pressing-the-caps-lock-key-how-do-i-fix-this">
+<h2>I have remapped my Caps-lock key to something else (like <code class="docutils literal notranslate"><span class="pre">[Ctrl]</span></code>). My defined abbreviations don’t work or the output case is inverted after pressing the Caps-lock key. How do I fix this?<a class="headerlink" href="#i-have-remapped-my-caps-lock-key-to-something-else-like-ctrl-my-defined-abbreviations-dont-work-or-the-output-case-is-inverted-after-pressing-the-caps-lock-key-how-do-i-fix-this" title="Permalink to this headline">¶</a></h2>
+<p>Due to the way AutoKey monitors the keyboard, it still sees the remapped
+Caps-lock key as “Caps-lock”, even though other applications see the
+remapped key. So AutoKey can not automatically detect this situation.
+Support for remapped Caps-lock keys was added in version 0.95.10.</p>
+<p>So to fix this, make sure you run at least version 0.95.10. Then go to
+the AutoKey applications settings and check the option “Disable handling
+of the Capslock key”, then restart AutoKey (Use <code class="docutils literal notranslate"><span class="pre">File</span></code> → <code class="docutils literal notranslate"><span class="pre">Quit</span></code>,
+then start AutoKey again).</p>
+</div>
+<div class="section" id="autokey-qt-kde-desktop-automatically-starting-autokey-shows-the-gui-during-login-even-if-show-main-window-when-starting-is-disabled">
+<h2>AutoKey (Qt) + KDE desktop: Automatically starting AutoKey shows the GUI during login, even if <code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">main</span> <span class="pre">window</span> <span class="pre">when</span> <span class="pre">starting</span></code> is disabled<a class="headerlink" href="#autokey-qt-kde-desktop-automatically-starting-autokey-shows-the-gui-during-login-even-if-show-main-window-when-starting-is-disabled" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Explanation:</div>
+<div class="line">On KDE Plasma, AutoKey gets started twice during the login process.
+Once by the enabled Autostart setting in the Settings dialogue, and
+another time by the session restoration functionality built into the
+KDE desktop. When AutoKey is running, another starting instance causes
+the first to open it’s GUI. That’s why it shows up, even if disabled
+in the settings.</div>
+</div>
+<div class="line-block">
+<div class="line">Solution:</div>
+<div class="line">Either disable the Autostart option in the AutoKey settings and let
+the KDE session restoration mechanism restart AutoKey.</div>
+<div class="line">Or exclude AutoKey from said mechanism and keep the Autostart setting
+in the AutoKey settings active.</div>
+<div class="line">The exclusion feature is here: Open the KDE5 systemsettings
+(<code class="docutils literal notranslate"><span class="pre">systemsettings5</span></code>). In the settings application, navigate to
+<code class="docutils literal notranslate"><span class="pre">Workspace</span></code>→<code class="docutils literal notranslate"><span class="pre">Startup</span> <span class="pre">and</span> <span class="pre">Shutdown</span></code>→<code class="docutils literal notranslate"><span class="pre">Desktop</span> <span class="pre">Session</span></code>→<code class="docutils literal notranslate"><span class="pre">On</span> <span class="pre">Login</span></code>.
+Add <code class="docutils literal notranslate"><span class="pre">autokey-qt</span></code> to the applications listed in the text field
+labeled <code class="docutils literal notranslate"><span class="pre">Applications</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">excluded</span> <span class="pre">from</span> <span class="pre">sessions:</span></code>.</div>
+</div>
+</div>
+<div class="section" id="feature-x-is-not-working-correctly-for-me-how-do-i-post-useful-debugging-information-on-the-list">
+<h2>Feature X is not working correctly for me. How do I post useful debugging information on the list?<a class="headerlink" href="#feature-x-is-not-working-correctly-for-me-how-do-i-post-useful-debugging-information-on-the-list" title="Permalink to this headline">¶</a></h2>
+<p>Start by opening a terminal. Then start AutoKey with the debug logging
+turned on:</p>
+<p>Start the GTK interface using <code class="docutils literal notranslate"><span class="pre">autokey-gtk</span> <span class="pre">-l</span></code> Or start the Qt
+interface using <code class="docutils literal notranslate"><span class="pre">autokey-qt</span> <span class="pre">-l</span></code></p>
+<p>Next, perform whatever action is causing the problem. Lastly, capture
+the output and include it with your posting.</p>
+</div>
+<div class="section" id="how-do-i-know-which-interface-to-use-settings-advanced-settings-device-interface">
+<h2>How do I know which interface to use? (Settings-&gt;Advanced Settings-&gt;Device Interface)<a class="headerlink" href="#how-do-i-know-which-interface-to-use-settings-advanced-settings-device-interface" title="Permalink to this headline">¶</a></h2>
+<p>When you start AutoKey for the first time, it attempts to choose the
+best possible option for you. For most people, this should work fine. As
+the dialog states, only change the setting if AutoKey is not responding
+to hotkeys and abbreviations. In that case, you can simply try the
+various options and see which works best for you. Note that some of the
+interfaces don’t work at all, depending on your distribution. To
+summarise:</p>
+<ul class="simple">
+<li><p>X Record: Will work in any distribution using X.org server prior to
+version 1.6. E.g. Ubuntu Jaunty upgrades the server to v1.6, and as a
+result XRecord will not work. The problem is fixed in Lucid (10.04).</p></li>
+<li><p>AT-SPI: Only works when the active window is a GTK-based application
+(including Firefox 3). Also requires certain configuration items in
+your Gnome environment to be enabled (see below).</p></li>
+</ul>
+</div>
+<div class="section" id="the-at-spi-device-interface-option-is-greyed-out-disabled">
+<h2>The AT-SPI device interface option is greyed out/disabled.<a class="headerlink" href="#the-at-spi-device-interface-option-is-greyed-out-disabled" title="Permalink to this headline">¶</a></h2>
+<p>To enable this (assistive tech) interface, you must have the AT-SPI
+packages installed and be running a GNOME-based distribution. The AT-SPI
+interface is a last-ditch option in case the other two options don’t
+work. It only works in certain applications (to be exact, GTK-based
+applications that have the ATK bridge compiled in).</p>
+<p>To enable it, run the following:</p>
+<p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-pyatspi</span></code></p>
+<p>You must then enable accessible technologies via the Gnome Accessibility
+Settings applet. Another way to get this interface up and running is to
+install an application called Accersizer. The first time you start
+Accersizer, it will enable the correct settings for you.</p>
+</div>
+<div class="section" id="i-disabled-the-notification-icon-and-i-dont-know-the-hotkey-for-displaying-the-configuration-window-how-do-i-bring-it-up">
+<h2>I disabled the notification icon, and I don’t know the hotkey for displaying the configuration window. How do I bring it up?<a class="headerlink" href="#i-disabled-the-notification-icon-and-i-dont-know-the-hotkey-for-displaying-the-configuration-window-how-do-i-bring-it-up" title="Permalink to this headline">¶</a></h2>
+<p>The default key binding to show the main window is <code class="docutils literal notranslate"><span class="pre">&lt;Super&gt;+k</span></code>. (On
+most keyboards,<code class="docutils literal notranslate"><span class="pre">&lt;Super&gt;</span></code> is the Windows logo key.)</p>
+<p>As an alternative, or if you disabled / changed the hotkey, simply start
+AutoKey again while it is already running. This will cause the
+configuration window to be shown.</p>
+</div>
+<div class="section" id="how-can-one-send-em-dash-or-another-unicode-special-character-in-new-python3-version-of-autokey">
+<h2>How can one send em dash or another Unicode special character in new, python3 version of AutoKey?<a class="headerlink" href="#how-can-one-send-em-dash-or-another-unicode-special-character-in-new-python3-version-of-autokey" title="Permalink to this headline">¶</a></h2>
+<p>One of the many options is to use the sample script below and modify
+<code class="docutils literal notranslate"><span class="pre">TextToType=&quot;—&quot;</span></code> to your desired special character (or sequence), for
+example <code class="docutils literal notranslate"><span class="pre">TextToType=&quot;≠≠≠&quot;</span></code>
+(<a class="reference external" href="https://github.com/autokey/autokey/issues/29#issuecomment-437426992">source</a>).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OldClipboard</span><span class="o">=</span><span class="n">clipboard</span><span class="o">.</span><span class="n">get_clipboard</span><span class="p">()</span>
+<span class="n">TextToType</span><span class="o">=</span><span class="s2">&quot;┐(´-｀)┌&quot;</span>
+<span class="n">clipboard</span><span class="o">.</span><span class="n">fill_clipboard</span><span class="p">(</span><span class="n">TextToType</span><span class="p">)</span>
+<span class="n">keyboard</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s2">&quot;&lt;ctrl&gt;+v&quot;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">clipboard</span><span class="o">.</span><span class="n">fill_clipboard</span><span class="p">(</span><span class="n">OldClipboard</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AutoKey</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Autokey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Thomas Hess.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Troubleshooting.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

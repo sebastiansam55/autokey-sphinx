@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Option 1) View AutoKey error messages &#8212; AutoKey 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <p>AutoKey scripts are basically Python scripts with an AutoKey API. There
+are 2 different ways to debug problems in your AutoKey scripts:</p>
+<p><strong>Option 1)</strong> View AutoKey error messages</p>
+<p><strong>Option 2)</strong> Develop your scripts using normal Python, then port to
+AutoKey</p>
+<div class="section" id="option-1-view-autokey-error-messages">
+<h1>Option 1) View AutoKey error messages<a class="headerlink" href="#option-1-view-autokey-error-messages" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>You can view the dialogue box by clicking menu item
+<code class="docutils literal notranslate"><span class="pre">Tools</span></code>→<code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">script</span> <span class="pre">error</span></code>.</p></li>
+<li><p>You can access the script error dialogue via the tray icon context
+menu, too. Note that if you use the GTK GUI (autokey-gtk), you have
+to keep the main window open for it to work, until
+<a class="reference external" href="https://github.com/autokey/autokey/issues/222">#222</a> is resolved.</p></li>
+<li><p>All scripting errors are also logged in the console output. You can
+exit AutoKey then start it from a terminal. eg:
+<code class="docutils literal notranslate"><span class="pre">autokey-gtk</span> <span class="pre">--verbose</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="option-2-develop-your-scripts-using-normal-python-then-port-to-autokey">
+<h1>Option 2) Develop your scripts using normal Python, then port to AutoKey<a class="headerlink" href="#option-2-develop-your-scripts-using-normal-python-then-port-to-autokey" title="Permalink to this headline">¶</a></h1>
+<p>Write your code in a normal Python script, such as “myscript.py” and
+execute it using any Python interpreter, such as running
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">myscript.py</span></code>. You can use
+<code class="docutils literal notranslate"><span class="pre">`unittest.mock.MagicMock()</span></code> &lt;<a class="reference external" href="https://docs.python.org/3/library/unittest.mock.html">https://docs.python.org/3/library/unittest.mock.html</a>&gt;`__
+to fake the API objects. It get’s a bit more complicated if you use the
+values returned by AutoKey API functions and need to fake them, too.
+Then you’ll have to configure the Mock object to return an expected
+value. But if you don’t care about returned values, you can just throw
+in something like this at the beginning of your script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+<span class="n">keyboard</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+<span class="n">mouse</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+<span class="n">dialog</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>and the script basically works outside of AutoKey, (without actual
+functionality, of course). Once you’ve got it working OK in normal
+Python, copy it into AutoKey. (Remove the Mock creation code, of
+course.) Note that each AutoKey script is stored as a Python file in
+your home folder, such as <code class="docutils literal notranslate"><span class="pre">~/.config/autokey/data/My\</span> <span class="pre">Phrases/</span></code> in
+Linux.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">AutoKey</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to Autokey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Thomas Hess.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Script-Debugging.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
