@@ -19,6 +19,7 @@ You'll need the following python packages (and dependencies). From my command hi
 - `pip install recommonmark`
 - `pip install sphinx-rtd-theme`
 - `pip install sphinx-epytext`
+- `sphinx-build -b html . ./_build`
 
 
 ## TODO
@@ -66,3 +67,5 @@ In `scripting/__init__.py` you have to both;
 This can probably be solved in some way but I will leave that for later.
 
 One quirk I noticed in the `keyboard` api page was that the enum for phrase send types (`SendMode`) did not respect the line formatting unless the were explicitly placed with `\\n`
+
+
