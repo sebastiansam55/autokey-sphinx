@@ -8,6 +8,8 @@ Uses the [sphinx epytext]() extension to convert older style epydoc documentatio
 
 I also have it set to use [recommonmark]() in case any one wants to use markdown really badly.
 
+It also uses the default [sphinx.ext.viewcode](https://www.sphinx-doc.org/en/master/usage/extensions/viewcode.html) to insert links to the related soure code. It looks sort of silly on the current main code base but this is fixed by the upcoming refactor.
+
 The old wiki pages, while written in markdown are easily converted using the bash script provided, `pdmdtorst.sh` (PanDocMarkDownTORST). Run this in the base of the wiki repo and it will generate a `.rst` file for every `.md` file found.
 
 
@@ -24,6 +26,11 @@ You'll need the following python packages (and dependencies). From my command hi
 
 ## TODO
 There is a plugin that supports versioned documentation, [sphinxcontrib-multiversion](https://github.com/Holzhaus/sphinx-multiversion) which seems to be decently well maintained.
+
+Going forward we should use sphinx syntax in comments instead of older epytext.;
+https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+
+For more information on the new comment markup.
 
 There are some minor tweaks that need to be made to the source code to generate the final products;
 
