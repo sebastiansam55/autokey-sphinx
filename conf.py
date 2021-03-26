@@ -19,11 +19,11 @@ sys.path.insert(0, os.path.abspath('/home/sam/git/autokey/lib'))
 # -- Project information -----------------------------------------------------
 
 project = 'AutoKey'
-copyright = '2021, Thomas Hess'
-author = 'Thomas Hess'
+copyright = '2021, Various'
+author = 'Various'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = 'v0.95.11'
 
 
 # -- General configuration ---------------------------------------------------
@@ -33,6 +33,7 @@ release = '0.1'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
     'recommonmark',
     'sphinx_rtd_theme',
     'sphinx_epytext',
@@ -51,7 +52,14 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'README.md', 'scripts']
+exclude_patterns = [
+    '_build',
+    'Thumbs.db',
+    '.DS_Store',
+    'README.md',
+    'scripts',
+    'old_wiki'
+]
 
 
 # -- Options for HTML output -------------------------------------------------
