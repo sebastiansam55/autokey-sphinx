@@ -25,6 +25,8 @@ You'll need the following python packages (and dependencies). From my command hi
 
 
 ## TODO
+Github action to checkout tag, then generate the documentation
+
 There is a plugin that supports versioned documentation, [sphinxcontrib-multiversion](https://github.com/Holzhaus/sphinx-multiversion) which seems to be decently well maintained.
 
 Going forward we should use sphinx syntax in comments instead of older epytext.;
