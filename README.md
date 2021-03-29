@@ -19,7 +19,9 @@ You'll need the following python packages (and dependencies). From my command hi
 - `pip install recommonmark`
 - `pip install sphinx-rtd-theme`
 - `pip install sphinx-epytext`
-- `sphinx-build -b html . ./_build`
+- `sphinx-build -a -E -b html . ./_build`
+
+`-a` for write all files, `-E` for always read all files, `-b html` for output to be in html format.
 
 
 ## TODO
