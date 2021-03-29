@@ -13,7 +13,7 @@
 import os
 import sys
 #TODO this needs to be dealt with for github actions
-sys.path.insert(0, os.path.abspath('/home/sam/git/autokey/lib'))
+sys.path.insert(0, os.path.abspath('/home/sam/git/ak/lib'))
 
 
 # -- Project information -----------------------------------------------------
@@ -73,3 +73,23 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+#TODO make this point to wherever the source files are goint to be hosted
+# this enables the "edit on github behavior for the top right corners of webpages
+html_context = {
+    'display_github': True,
+    'github_user': 'sebastiansam55',
+    'github_repo': 'autokey-sphinx',
+    'github_version': 'gh-pages/develop/',
+}
+
+# this code is to workaround the module docstring being posted at the top of every
+# api page.
+def skip_modules_docstring(app, what, name, obj, options, lines):
+    print(what, name)
+    if what == 'module':
+        print(what, name, lines)
+        del lines[:]
+
+def setup(app):
+    app.connect('autodoc-process-docstring', skip_modules_docstring)
