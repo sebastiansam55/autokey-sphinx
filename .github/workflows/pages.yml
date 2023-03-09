@@ -4,6 +4,8 @@ jobs:
   sphinx-build:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout repo
+        uses: actions/checkout@v2.3.4
       - run: |
           sudo apt install git python3-tk -y
           pip install sphinx recommonmark sphinx-rtd-theme sphinx-epytext
