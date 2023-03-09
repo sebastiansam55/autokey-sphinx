@@ -4,7 +4,7 @@ jobs:
   sphinx-build:
     runs-on: ubuntu-latest
     steps:
-      - run: >
+      - run: |
           sudo apt install git python3-tk -y
           pip install sphinx recommonmark sphinx-rtd-theme sphinx-epytext
           git clone https://github.com/autokey/autokey
