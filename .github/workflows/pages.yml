@@ -13,5 +13,5 @@ jobs:
           cd ..
           mkdir docs
           ls
-          sphinx-build -a -E -b html ./autokey/doc/sphinx ./docs
+          sphinx-build -a -E -b html ./ ./docs
       
