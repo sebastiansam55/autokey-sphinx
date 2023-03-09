@@ -11,5 +11,7 @@ jobs:
           cd autokey
           pip install .
           cd ..
+          mkdir docs
+          ls
           sphinx-build -a -E -b html ./autokey/doc/sphinx ./docs
       
