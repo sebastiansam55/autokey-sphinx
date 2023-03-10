@@ -1,11 +1,5 @@
 GtkClipboard API
 ================
 
-.. automodule:: autokey.common
-   :no-members:
-.. automodule:: autokey.gtkapp
-   :no-members:
-.. automodule:: autokey.scripting
-   :no-members:
-.. autoclass:: autokey.scripting.GtkClipboard
+.. autoclass:: autokey.scripting.clipboard_gtk.GtkClipboard
    :members:

@@ -1,11 +1,5 @@
 QtDialog API
 ============
 
-.. automodule:: autokey.common
-   :no-members:
-.. automodule:: autokey.qtapp
-   :no-members:
-.. automodule:: autokey.scripting
-   :no-members:
-.. autoclass:: autokey.scripting.QtDialog
+.. autoclass:: autokey.scripting.dialog_qt.QtDialog
    :members:
