@@ -95,7 +95,9 @@ html_context = {
 autodoc_mock_imports = [
     "PyQt5",
     "gi",
-    "pyatspi"
+    "pyatspi",
+    "tkinter",
+    "Tkinter"
 ]
 
 # this code is to workaround the module docstring being posted at the top of every
