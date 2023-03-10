@@ -17,12 +17,12 @@ jobs:
           pip install .
       - name: build
         run: |
-          mkdir ~/docs
-          sphinx-build -a -E -b html ./ ~/docs
+          mkdir docs
+          sphinx-build -a -E -b html ./ docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ~/docs
+          path: docs
       
   deploy:
     environment:
