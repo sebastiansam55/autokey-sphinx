@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v2.3.4
       - name: install requirements
         run: |
-          sudo apt install git python3-tk -y
-          pip install sphinx recommonmark sphinx-rtd-theme sphinx-epytext pygobject
+          sudo apt install git python3-tk python3-gi -y
+          pip install sphinx recommonmark sphinx-rtd-theme sphinx-epytext
       - name: install autokey
         run: |
           git clone https://github.com/autokey/autokey
