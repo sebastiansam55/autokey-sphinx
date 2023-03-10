@@ -7,5 +7,5 @@ QtDialog API
    :no-members:
 .. automodule:: autokey.scripting
    :no-members:
-.. autoclass:: QtDialog
+.. autoclass:: autokey.scripting.QtDialog
    :members:

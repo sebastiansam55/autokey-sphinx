@@ -7,5 +7,5 @@ GtkClipboard API
    :no-members:
 .. automodule:: autokey.scripting
    :no-members:
-.. autoclass:: GtkClipboard
+.. autoclass:: autokey.scripting.GtkClipboard
    :members:

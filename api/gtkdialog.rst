@@ -7,5 +7,5 @@ GtkDialog API
    :no-members:
 .. automodule:: autokey.scripting
    :no-members:
-.. autoclass:: GtkDialog
+.. autoclass:: autokey.scripting.GtkDialog
    :members:

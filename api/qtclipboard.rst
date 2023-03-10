@@ -7,5 +7,5 @@ QtClipboard API
    :no-members:
 .. automodule:: autokey.scripting
    :no-members:
-.. autoclass:: QtClipboard
+.. autoclass:: autokey.scripting.QtClipboard
    :members:
