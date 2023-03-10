@@ -26,7 +26,7 @@ copyright = '2021, Various'
 author = 'Various'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.95.10'
+release = version = 'v0.95.10'
 
 
 # -- General configuration ---------------------------------------------------
@@ -91,6 +91,12 @@ html_context = {
     'github_repo': 'autokey-sphinx',
     'github_version': 'gh-pages/develop/',
 }
+
+autodoc_mock_imports = [
+    "PyQt5",
+    "gi",
+    "pyatspi"
+]
 
 # this code is to workaround the module docstring being posted at the top of every
 # api page.

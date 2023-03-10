@@ -15,8 +15,8 @@ jobs:
       - name: install requirements
         run: |
           sudo apt-get install git python3-tk -y
-          sudo apt-get install python3-pyqt5 python3-pyqt5.qsci python3-pyqt5.qtsvg -y
-          sudo apt-get install zenity python3-gi python3-dbus gobject-introspection gir1.2-ayatanaappindicator3-0.1 gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-gtksource-3.0 gir1.2-notify-0.7 -y
+          # sudo apt-get install python3-pyqt5 python3-pyqt5.qsci python3-pyqt5.qtsvg -y
+          # sudo apt-get install zenity python3-gi python3-dbus gobject-introspection gir1.2-ayatanaappindicator3-0.1 gir1.2-glib-2.0 gir1.2-gtk-3.0 gir1.2-gtksource-3.0 gir1.2-notify-0.7 -y
           # pip install dbus-python pyinotify python-xlib pygobject pyqt5 qscintilla
           
       - name: install autokey

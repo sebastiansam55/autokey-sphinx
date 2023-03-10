@@ -1,13 +1,6 @@
 Store API
 =========
 
-.. automodule:: autokey.common
-   :no-members:
-   :noindex:
-.. automodule:: autokey.gtkapp
-   :no-members:
-   :noindex:
-.. automodule:: autokey.scripting_Store
-   :no-members:
-.. autoclass:: Store
+.. automodule:: autokey.model.store.Store
    :members:
+
