@@ -15,11 +15,11 @@ jobs:
           cd ..
           mkdir docs
           ls
-          sphinx-build -a -E -b html ./ ./docs
+          sphinx-build -a -E -b html ./ /docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ${{ env.BUILD_PATH }}/docs
+          path: /docs
       
   deploy:
     environment:
