@@ -12,6 +12,29 @@
 #
 import os
 import sys
+import re
+
+# pulled from autokey/setup.py
+def get_autokey_version():
+    source_file_name = "./autokey/lib/autokey/common.py"
+    with open(source_file_name, "r") as metadata_source_file:
+        source = metadata_source_file.read()
+    if not source:
+        print("Cannot read AutoKey source file containing required information. Unreadable: {}".format(
+            source_file_name))
+        sys.exit(1)
+
+    def search_for(pattern: str) -> str:
+        return re.search(
+            r"""^{}\s*=\s*('(.*)'|"(.*)")""".format(pattern),  # Search for assignments: VAR = 'VALUE' or VAR = "VALUE"
+            source,
+            re.M
+        ).group(1)[1:-1]  # Cut off outer quotation marks
+
+    return search_for("VERSION")
+
+
+
 #TODO this needs to be dealt with for github actions
 # different local path for master documentation
 # sys.path.insert(0, os.path.abspath('/home/sam/git/ak/lib'))
@@ -26,8 +49,7 @@ copyright = '2021, Various'
 author = 'Various'
 
 # The full version, including alpha/beta/rc tags
-release = version = 'v0.95.10'
-
+release = version = get_autokey_version()
 
 # -- General configuration ---------------------------------------------------
 
