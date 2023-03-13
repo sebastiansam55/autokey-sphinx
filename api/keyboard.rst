@@ -9,3 +9,9 @@ Keyboard API
    :no-members:
 .. autoclass:: Keyboard
    :members:
+
+Keys
+====
+
+.. autoenum:: autokey.model.key.Key
+   :members:

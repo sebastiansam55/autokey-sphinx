@@ -62,6 +62,7 @@ extensions = [
     'recommonmark',
     'sphinx_rtd_theme',
     'sphinx_epytext',
+    'enum_tools.autoenum'
 ]
 
 

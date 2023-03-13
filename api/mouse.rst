@@ -9,3 +9,10 @@ Mouse API
    :no-members:
 .. autoclass:: Mouse
    :members:
+
+
+Buttons
+=======
+
+.. autoenum:: autokey.model.button.Button
+   :members:
