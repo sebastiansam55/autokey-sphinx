@@ -9,7 +9,6 @@ Welcome to AutoKey!
 .. toctree::
    intro
    api
-   quickstart
 
 
 
