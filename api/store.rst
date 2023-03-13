@@ -1,6 +1,8 @@
 Store API
 =========
 
-.. automodule:: autokey.model.store.Store
+.. automodule:: autokey.model.store
+   :no-members:
+.. autoclass:: Store
    :members:
 
