@@ -112,7 +112,7 @@ html_context = {
     'display_github': True,
     'github_user': 'sebastiansam55',
     'github_repo': 'autokey-sphinx',
-    'github_version': 'gh-pages/develop/',
+    'github_version': 'main',
 }
 
 autodoc_mock_imports = [
