@@ -9,6 +9,7 @@ Keyboard API
    :no-members:
 .. autoclass:: Keyboard
    :members:
+   :exclude-members: mediator
 
 Keys
 ====

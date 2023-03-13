@@ -9,3 +9,4 @@ Engine API
    :no-members:
 .. autoclass:: Engine
    :members:
+   :exclude-members: Key, SendMode
