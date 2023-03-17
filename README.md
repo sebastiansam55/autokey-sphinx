@@ -22,6 +22,10 @@ git clone https://github.com/autokey/autokey
 cd autokey
 pip install .
 cd ..
+pip install sphinx recommonmark sphinx-rtd-theme sphinx-epytext enum-tools[sphinx]
+# for first time installs you'll likely have to restart your shell for the sphinx-build command to be found.
+
+# should be run from the base of this repository
 sphinx-build -a -E -b html . ./docs
 ```
 
