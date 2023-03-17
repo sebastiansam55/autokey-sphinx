@@ -1,3 +1,5 @@
-sphinx==3.5.3
-sphinx_rtd_theme==0.5.1
+sphinx==6.3.1
+sphinx_rtd_theme==1.2.0
 sphinx-epytext==0.0.4
+recommonmark==0.7.1
+enum-tools[sphinx]==0.9.0
