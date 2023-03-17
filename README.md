@@ -8,18 +8,22 @@ Uses the [sphinx epytext]() extension to convert older style epydoc documentatio
 
 I also have it set to use [recommonmark]() in case any one wants to use markdown really badly.
 
-It also uses the default [sphinx.ext.viewcode](https://www.sphinx-doc.org/en/master/usage/extensions/viewcode.html) to insert links to the related soure code.
+It also uses the default [sphinx.ext.viewcode](https://www.sphinx-doc.org/en/master/usage/extensions/viewcode.html) to insert links to the related source code.
 
 
 
 
 ## Local testing
 You'll need the following python packages (and dependencies). From my command history getting it up and running;
-- `pip install Sphinx`
-- `pip install recommonmark`
-- `pip install sphinx-rtd-theme`
-- `pip install sphinx-epytext`
-- `sphinx-build -b html . ./_build`
+```
+git clone https://github.com/sebastiansam55/autokey-sphinx
+cd autokey-sphinx
+git clone https://github.com/autokey/autokey
+cd autokey
+pip install .
+cd ..
+sphinx-build -a -E -b html . ./docs
+```
 
 
 ## Github Actions
@@ -42,7 +46,5 @@ Going forward we should use sphinx syntax in comments instead of older epytext.;
 https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 
 For more information on the new comment markup.
-
-One quirk I noticed in the `keyboard` api page was that the enum for phrase send types (`SendMode`) did not respect the line formatting unless the were explicitly placed with `\\n`
 
 
